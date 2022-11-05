@@ -16,11 +16,19 @@ import sys
 
 class StreamlitApp:
 
+<<<<<<< HEAD
     def __init__(self):
         self.fighters = pd.read_csv('Data/UFC_Fighters_Database.csv')
         self.fighters2 = pd.read_csv('Data/fighters.csv')
         self.df2 = pd.read_csv(
             'Data/prediction_data.csv', index_col="Unnamed: 0")
+=======
+	def __init__(self):
+		self.fighters = pd.read_csv('Data/UFC_Fighters_Database.csv')
+		# self.fighters2 = pd.read_csv('Data/fighters.csv')
+		self.fighters2 = pd.read_csv('Data/fighters.csv')
+		self.df2 = pd.read_csv('Data/prediction_data.csv', index_col="Unnamed: 0")
+>>>>>>> 0f902626857ad9407fa49358580208d2cd001478
 
         # Switch to this for faster loading.
         mlp_file = open('Models/predict_winner.pkl', 'rb')
@@ -57,6 +65,7 @@ class StreamlitApp:
         )
         return fig
 
+<<<<<<< HEAD
     def get_headers():
         # Hack to get the session object from Streamlit.
 
@@ -71,6 +80,24 @@ class StreamlitApp:
         for session_info in session_infos:
             headers = session_info.ws.request.headers
             st.write(headers)
+=======
+	def get_headers():
+		# Hack to get the session object from Streamlit.
+
+		current_server = Server.get_current()
+		if hasattr(current_server, '_session_infos'):
+			# Streamlit < 0.56
+			session_infos = Server.get_current()._session_infos.values()
+		else:
+			session_infos = Server.get_current()._session_info_by_id.values()
+
+		# Multiple Session Objects?
+		for session_info in session_infos:
+			headers = session_info.ws.request.headers
+			st.write(headers)
+
+		return headers
+>>>>>>> 0f902626857ad9407fa49358580208d2cd001478
 
             return headers
 
@@ -151,10 +178,18 @@ class StreamlitApp:
                 data1 = self.fighters2[self.fighters2.name == fighter1]
                 data2 = self.fighters2[self.fighters2.name == fighter2]
 
+<<<<<<< HEAD
                 columns = ['REACH_delta', 'SLPM_delta', 'SAPM_delta', 'STRA_delta',
                            'STRD_delta', 'TD_delta', 'TDA_delta', 'TDD_delta', 'SUBA_delta', 'Odds_delta']
                 best_cols = ['SLPM_delta', 'SAPM_delta', 'STRD_delta',
                              'TDD_delta', 'SUBA_delta', 'Odds_delta']
+=======
+				# st.table(data1)
+				# st.table(data2)
+
+				columns = ['REACH_delta','SLPM_delta','SAPM_delta','STRA_delta','STRD_delta','TD_delta','TDA_delta','TDD_delta','SUBA_delta','Odds_delta']
+				best_cols = ['SLPM_delta', 'SAPM_delta', 'STRD_delta', 'TDD_delta', 'SUBA_delta', 'Odds_delta']
+>>>>>>> 0f902626857ad9407fa49358580208d2cd001478
 
                 df = pd.DataFrame(
                     [
@@ -285,6 +320,7 @@ class StreamlitApp:
         return self
 
 
+<<<<<<< HEAD
 def data_refresher_function(arg):
     global sa
     t = current_thread()
@@ -314,6 +350,34 @@ def data_refresher_function(arg):
 
 data_refresher = Thread(target=data_refresher_function, args=(10, ))
 data_refresher.daemon = True
+=======
+# def data_refresher_function(arg):
+# 	global sa
+# 	t = current_thread()
+# 	# Thread is alive by default
+# 	t.alive = True
+
+# 	while True:
+# 		if not t.alive:
+# 			break
+		
+# 		print("UPDATING FIGHTERS\n..............................................................")
+# 		call(["python", "ufcscraper.py"], stdout=DEVNULL, stderr=DEVNULL)
+# 		print("COMPLETED\n..............................................................")
+
+# 		print("PREPARING DATA\n..............................................................")
+# 		call(["python", "sources/data_preparations.py"], stdout=DEVNULL, stderr=DEVNULL)
+# 		print("COMPLETED\n..............................................................")
+
+# 		print("UPDATING STREAMLIT APP\n.................................................")
+# 		# sa.reconstruct()
+# 		# sa.construct_app()
+# 		# Wait for 12hours
+# 		# sleep(43200)
+
+# data_refresher = Thread(target = data_refresher_function, args = (10, ))
+# data_refresher.daemon = True
+>>>>>>> 0f902626857ad9407fa49358580208d2cd001478
 
 try:
     # data_refresher.start()
@@ -323,5 +387,11 @@ try:
 
     # data_refresher.join()
 except Exception as e:
+<<<<<<< HEAD
     data_refresher.alive = False
     # sys.exit(e)
+=======
+	# data_refresher.alive = False
+	# sys.exit(e)
+	print(e)
+>>>>>>> 0f902626857ad9407fa49358580208d2cd001478
